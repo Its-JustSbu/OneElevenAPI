@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,13 +23,15 @@ app.MapPost("/", (RequestBody request) =>
 {
     if (request.Data is null) return Results.BadRequest("Data must be of type string");
 
-    if (request.Data.Length == 0) return Results.Ok(new ResponseBody { Word = [] });
+    if (request.Data.Length == 0) return Results.Ok(new { word = Array.Empty<Char>() });
 
-    if (request.Data.Length == 1) return Results.Ok(new ResponseBody { Word = request.Data.ToCharArray() });
+    if (request.Data.Length == 1) return Results.Ok(new { word = request.Data.ToCharArray() });
 
-    return Results.Ok(new ResponseBody { Word = _main.sortString(request.Data.ToCharArray()) });
+    return Results.Ok(new { word = _main.sortString(request.Data.ToCharArray()) });
 });
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.Run();
