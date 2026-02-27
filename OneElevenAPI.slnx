@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="OneElevenAPI/OneElevenAPI.csproj" />
+  <Project Path="OneElevenAPITest/OneElevenAPITest.csproj" />
+</Solution>
